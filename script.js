@@ -6,7 +6,6 @@ const steps           = [...document.querySelectorAll(".form-step")];
 const prevBtn         = document.querySelector("#prevBtn");
 const nextBtn         = document.querySelector("#nextBtn");
 const submitBtn       = document.querySelector("#submitBtn");
-const currentStepText = document.querySelector("#currentStep");
 const progressBar     = document.querySelector("#progressBar");
 const modalOverlay    = document.querySelector("#modalOverlay");
 const resetBtn        = document.querySelector("#resetBtn");
@@ -66,7 +65,6 @@ function updateStep() {
     step.classList.toggle("is-active", index === currentStep);
   });
 
-  currentStepText.textContent = currentStep + 1;
   progressBar.style.width = `${((currentStep + 1) / steps.length) * 100}%`;
 
   prevBtn.disabled = currentStep === 0;

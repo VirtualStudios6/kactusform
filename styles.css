@@ -189,16 +189,6 @@ textarea {
   letter-spacing: -0.05em;
 }
 
-.step-counter {
-  display: grid;
-  place-items: center;
-  min-width: 58px;
-  height: 42px;
-  border-radius: 999px;
-  color: #10130d;
-  background: var(--accent);
-  font-weight: 800;
-}
 
 .progress {
   width: 100%;

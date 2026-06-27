@@ -16,7 +16,8 @@
 <body>
   <main class="page-shell">
     <section class="hero-panel" aria-label="Presentación del formulario">
-      <div class="brand-pill">KACTUS AGENCY · FASE 1</div>
+      <img src="logo.png" alt="Kactus Agency" class="brand-logo" />
+      <div class="brand-pill">FASE 1</div>
       <h1>Cuéntanos tu proyecto</h1>
       <p>
         Queremos conocer tu negocio para crear una identidad visual y una estrategia de marketing
@@ -235,18 +236,25 @@
         </div>
       </form>
 
-      <div class="success-card" id="successCard" hidden>
-        <span class="success-icon">✓</span>
-        <h3>¡Fase 1 terminada!</h3>
-        <p>
-          Gracias por confiar en Kactus Agency. Cada respuesta nos ayuda a entender mejor tu marca
-          para crear contenido con intención y resultados. Pronto te escribiremos para el siguiente
-          paso.
-        </p>
-        <button class="btn ghost" type="button" id="resetBtn">Enviar otro formulario</button>
-      </div>
     </section>
   </main>
+
+  <div class="modal-overlay" id="modalOverlay" hidden>
+    <div class="success-card" id="successCard">
+      <img src="logo.png" alt="Kactus Agency" class="brand-logo modal-logo" />
+      <svg class="success-check" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle class="check-circle" pathLength="100" cx="26" cy="26" r="23" fill="none"/>
+        <path class="check-mark" pathLength="100" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+      </svg>
+      <h3>¡Fase 1 terminada!</h3>
+      <p>
+        Gracias por confiar en Kactus Agency. Cada respuesta nos ayuda a entender mejor tu marca
+        para crear contenido con intención y resultados. Pronto te escribiremos para el siguiente
+        paso.
+      </p>
+      <button class="btn ghost" type="button" id="resetBtn">Enviar otro formulario</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

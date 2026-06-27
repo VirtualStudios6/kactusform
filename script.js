@@ -1,4 +1,5 @@
 const SUBMIT_URL = "https://formsubmit.co/ajax/ceovirtualstudios@gmail.com";
+const WA_NUMERO  = "+18295846469";
 
 const form            = document.querySelector("#projectForm");
 const steps           = [...document.querySelectorAll(".form-step")];
@@ -7,7 +8,7 @@ const nextBtn         = document.querySelector("#nextBtn");
 const submitBtn       = document.querySelector("#submitBtn");
 const currentStepText = document.querySelector("#currentStep");
 const progressBar     = document.querySelector("#progressBar");
-const successCard     = document.querySelector("#successCard");
+const modalOverlay    = document.querySelector("#modalOverlay");
 const resetBtn        = document.querySelector("#resetBtn");
 
 const fieldExperiencia    = document.querySelector("#fieldExperiencia");
@@ -96,7 +97,7 @@ function getFormData() {
   return values;
 }
 
-// --- Envío a Google Sheets ---
+// --- Envío por email ---
 
 async function enviarDatos(payload) {
   const body = {
@@ -117,10 +118,105 @@ async function enviarDatos(payload) {
   if (!res.ok) throw new Error("Error al enviar");
 }
 
+// --- Sonidos ---
+
+function crearTono(freq, dur, vol = 0.10) {
+  try {
+    const ctx  = new (window.AudioContext || window.webkitAudioContext)();
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(vol, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    osc.start();
+    osc.stop(ctx.currentTime + dur);
+  } catch (_) {}
+}
+
+function sonarPaso() {
+  crearTono(880, 0.09, 0.07);
+}
+
+function sonarExito() {
+  crearTono(523, 0.35, 0.10);
+  setTimeout(() => crearTono(659, 0.35, 0.09), 100);
+  setTimeout(() => crearTono(784, 0.55, 0.08), 200);
+  setTimeout(() => crearTono(1047, 0.70, 0.07), 330);
+}
+
+// --- Confetti ---
+
+function lanzarConfetti() {
+  const canvas = document.createElement("canvas");
+  Object.assign(canvas.style, {
+    position: "fixed", inset: "0", width: "100%", height: "100%",
+    pointerEvents: "none", zIndex: "400",
+  });
+  document.body.appendChild(canvas);
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const ctx     = canvas.getContext("2d");
+  const colores = ["#c7ff4a", "#86f7c5", "#ffffff", "#f7f7f2", "#a8ff6a"];
+  const piezas  = Array.from({ length: 110 }, () => ({
+    x:     Math.random() * canvas.width,
+    y:     -12 - Math.random() * 60,
+    w:     Math.random() * 9 + 4,
+    h:     Math.random() * 5 + 3,
+    color: colores[Math.floor(Math.random() * colores.length)],
+    rot:   Math.random() * Math.PI * 2,
+    rotV:  (Math.random() - 0.5) * 0.15,
+    vx:    (Math.random() - 0.5) * 2,
+    vy:    Math.random() * 3 + 1.5,
+  }));
+
+  let frame = 0;
+  (function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    piezas.forEach((p) => {
+      p.y   += p.vy;
+      p.x   += p.vx + Math.sin(frame / 30 + p.rot) * 0.5;
+      p.rot += p.rotV;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle    = p.color;
+      ctx.globalAlpha  = Math.max(0, 1 - frame / 180);
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 200) requestAnimationFrame(tick);
+    else canvas.remove();
+  })();
+}
+
+// --- Abrir WhatsApp con el brief pre-llenado ---
+
+function abrirWhatsApp(payload) {
+  const msg =
+    "📋 *Nuevo brief Kactus*\n\n" +
+    "Nombre: "    + (payload.nombre    || "-") + "\n" +
+    "Teléfono: "  + (payload.telefono  || "-") + "\n" +
+    "Instagram: " + (payload.instagram || "-") + "\n\n" +
+    "Negocio: "   + (payload.negocio   || "-") + "\n" +
+    "Servicios: " + (payload.servicios?.join(", ") || "-") + "\n" +
+    "Objetivos: " + (payload.objetivos?.join(", ") || "-") + "\n" +
+    "Inversión: " + (payload.inversion || "-") + "\n" +
+    "Inicio: "    + (payload.fecha_inicio || "-");
+
+  const numero = WA_NUMERO.replace(/[^\d]/g, "");
+  window.open("https://wa.me/" + numero + "?text=" + encodeURIComponent(msg), "_blank");
+}
+
 // --- Eventos ---
 
 nextBtn.addEventListener("click", () => {
   if (!validateCurrentStep()) return;
+  sonarPaso();
   currentStep += 1;
   updateStep();
   const panel = document.querySelector(".form-panel");
@@ -131,6 +227,7 @@ nextBtn.addEventListener("click", () => {
 });
 
 prevBtn.addEventListener("click", () => {
+  sonarPaso();
   currentStep -= 1;
   updateStep();
 });
@@ -154,8 +251,11 @@ form.addEventListener("submit", async (event) => {
 
   try {
     await enviarDatos(payload);
-    form.hidden = true;
-    successCard.hidden = false;
+    abrirWhatsApp(payload);
+    sonarExito();
+    lanzarConfetti();
+    modalOverlay.hidden = false;
+    document.body.style.overflow = "hidden";
   } catch (_) {
     submitBtn.textContent = "Error de conexión — intenta de nuevo";
     submitBtn.disabled = false;
@@ -168,8 +268,8 @@ form.addEventListener("submit", async (event) => {
 
 resetBtn.addEventListener("click", () => {
   form.reset();
-  form.hidden = false;
-  successCard.hidden = true;
+  modalOverlay.hidden = true;
+  document.body.style.overflow = "";
   currentStep = 0;
   updateExperienciaField();
   updateStep();

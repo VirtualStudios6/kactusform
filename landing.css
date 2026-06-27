@@ -1,3 +1,10 @@
+/* Neutraliza el margin-left:auto del form para todos los botones del landing */
+.l-nav .btn,
+.l-hero .btn,
+.l-cta-section .btn {
+  margin-left: 0;
+}
+
 /* ── Nav ──────────────────────────────────────────── */
 
 .l-nav {
@@ -240,19 +247,48 @@
   }
 
   .l-nav-logo {
-    height: 36px;
+    height: 34px;
+  }
+
+  .l-nav-cta {
+    font-size: 13px;
+    padding: 0 16px;
+    min-height: 40px;
   }
 
   .l-hero {
-    padding: 100px 5% 60px;
+    padding: 96px 5% 56px;
+    gap: 0;
+  }
+
+  .l-hero h1 {
+    font-size: clamp(42px, 13vw, 60px);
+    margin: 20px 0 20px;
+  }
+
+  .l-hero p {
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  .l-cta {
+    width: 100%;
+    max-width: 340px;
+    font-size: 15px;
+    padding: 0 20px;
   }
 
   .l-section {
-    padding: 64px 5%;
+    padding: 56px 5%;
   }
 
   .l-cta-section {
-    padding: 64px 5%;
+    padding: 56px 5%;
+  }
+
+  .l-cta-section .l-cta {
+    width: 100%;
+    max-width: 340px;
   }
 
   .l-process {

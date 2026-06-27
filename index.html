@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#080a0d" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Kactus Agency | Cuéntanos tu Proyecto</title>
+  <meta name="description" content="Formulario moderno para conocer tu negocio y crear una estrategia personalizada de marketing." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero-panel" aria-label="Presentación del formulario">
+      <div class="brand-pill">KACTUS AGENCY · FASE 1</div>
+      <h1>Cuéntanos tu proyecto</h1>
+      <p>
+        Queremos conocer tu negocio para crear una identidad visual y una estrategia de marketing
+        personalizada, clara y enfocada en resultados.
+      </p>
+
+      <div class="hero-stats" aria-label="Beneficios">
+        <article>
+          <strong>01</strong>
+          <span>Diagnóstico de marca</span>
+        </article>
+        <article>
+          <strong>02</strong>
+          <span>Estrategia personalizada</span>
+        </article>
+        <article>
+          <strong>03</strong>
+          <span>Próximo paso comercial</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="form-panel" aria-label="Formulario de proyecto">
+      <div class="form-header">
+        <div>
+          <span class="eyebrow">Onboarding creativo</span>
+          <h2>Brief del cliente</h2>
+        </div>
+        <span class="step-counter"><span id="currentStep">1</span>/4</span>
+      </div>
+
+      <div class="progress" aria-hidden="true">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <form id="projectForm" novalidate>
+
+        <!-- Paso 1 -->
+        <fieldset class="form-step is-active" data-step="1">
+          <legend>Datos de contacto</legend>
+
+          <label class="field">
+            <span>Nombre del contacto *</span>
+            <input type="text" name="nombre" placeholder="Ej. Reison García" required />
+            <small class="error">Escribe el nombre del contacto.</small>
+          </label>
+
+          <label class="field">
+            <span>Número personal de contacto *</span>
+            <input type="tel" name="telefono" placeholder="Ej. +1 809 000 0000" required />
+            <small class="error">Escribe un número válido.</small>
+          </label>
+
+          <label class="field">
+            <span>Usuario de tu Instagram *</span>
+            <input type="text" name="instagram" placeholder="Ej. @tu_marca" required />
+            <small class="error">Escribe el usuario de Instagram.</small>
+          </label>
+        </fieldset>
+
+        <!-- Paso 2 -->
+        <fieldset class="form-step" data-step="2">
+          <legend>Contexto del negocio</legend>
+
+          <div class="field-group" data-required="true">
+            <p>¿Tienes experiencia con otra agencia de marketing? *</p>
+            <div class="options-grid" id="experienciaOpciones">
+              <label class="option-card">
+                <input type="radio" name="experiencia_agencia" value="Sí" required />
+                <span>Sí</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="experiencia_agencia" value="No" />
+                <span>No</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="experiencia_agencia" value="Lo hacemos nosotros mismos" />
+                <span>Lo hacemos nosotros mismos</span>
+              </label>
+            </div>
+            <small class="error">Selecciona una opción.</small>
+          </div>
+
+          <label class="field" id="fieldExperiencia">
+            <span id="labelExperiencia">Describe tu experiencia *</span>
+            <textarea name="descripcion_experiencia" rows="4"
+              placeholder="Cuéntanos qué funcionó, qué no y qué quieres mejorar." required></textarea>
+            <small class="error">Completa este campo.</small>
+          </label>
+
+          <label class="field">
+            <span>¿A qué se dedica tu negocio? *</span>
+            <textarea name="negocio" rows="3"
+              placeholder="Ej. Restaurante, tienda de ropa, inmobiliaria, clínica, marca personal…" required></textarea>
+            <small class="error">Cuéntanos a qué se dedica tu negocio.</small>
+          </label>
+        </fieldset>
+
+        <!-- Paso 3 -->
+        <fieldset class="form-step" data-step="3">
+          <legend>Marketing y ventas</legend>
+
+          <label class="field">
+            <span>¿Cuál es el proceso que sigue una persona en redes sociales para convertirse en tu cliente? *</span>
+            <textarea name="proceso_cliente" rows="4"
+              placeholder="Ej. Mi cliente ve mi Instagram, me manda WhatsApp y compra por ese medio." required></textarea>
+            <small class="error">Explica el proceso actual.</small>
+          </label>
+
+          <div class="field-group" data-required="true">
+            <p>¿Qué te gustaría lograr con el marketing? *</p>
+            <div class="options-grid">
+              <label class="option-card">
+                <input type="checkbox" name="objetivos" value="Atraer clientes" />
+                <span>Atraer clientes</span>
+              </label>
+              <label class="option-card">
+                <input type="checkbox" name="objetivos" value="Vender más" />
+                <span>Vender más</span>
+              </label>
+              <label class="option-card">
+                <input type="checkbox" name="objetivos" value="Mejorar imagen" />
+                <span>Mejorar imagen</span>
+              </label>
+            </div>
+            <small class="error">Elige al menos un objetivo.</small>
+          </div>
+
+          <div class="field-group" data-required="true">
+            <p>¿Qué servicio buscas? *</p>
+            <div class="options-stack">
+              <label class="option-card wide">
+                <input type="checkbox" name="servicios" value="Creación de contenido" />
+                <span>Creación de contenido para redes sociales <em>(Reels, fotografías profesionales y diseños)</em></span>
+              </label>
+              <label class="option-card wide">
+                <input type="checkbox" name="servicios" value="Meta Ads" />
+                <span>Anuncios de Facebook e Instagram para tu negocio</span>
+              </label>
+              <label class="option-card wide">
+                <input type="checkbox" name="servicios" value="Apoyo comercial" />
+                <span>Herramientas para vender más <em>(Apoyo comercial)</em></span>
+              </label>
+            </div>
+            <small class="error">Elige al menos un servicio.</small>
+          </div>
+        </fieldset>
+
+        <!-- Paso 4 -->
+        <fieldset class="form-step" data-step="4">
+          <legend>Inversión y próximos pasos</legend>
+
+          <label class="field">
+            <span>¿Cuáles son las marcas que se asimilan a tu concepto? *</span>
+            <textarea name="referencias" rows="3"
+              placeholder="Agrega sus usuarios de Instagram o enlaces." required></textarea>
+            <small class="error">Agrega al menos una referencia.</small>
+          </label>
+
+          <label class="field">
+            <span>¿En qué crees que podemos ayudarte? *</span>
+            <textarea name="ayuda" rows="4"
+              placeholder="Ej. Mejorar contenido, aumentar leads, ordenar ventas, lanzar campaña…" required></textarea>
+            <small class="error">Cuéntanos cómo podemos ayudarte.</small>
+          </label>
+
+          <div class="field-group" data-required="true">
+            <p>¿Cuánto estás dispuesto a invertir mensualmente para escalar tu negocio si los resultados son medibles? *</p>
+            <div class="options-stack">
+              <label class="option-card wide">
+                <input type="radio" name="inversion" value="$10,000 - $12,000" required />
+                <span>$10,000 – $12,000 <em>· Contenido</em></span>
+              </label>
+              <label class="option-card wide">
+                <input type="radio" name="inversion" value="$12,000 - $15,000" />
+                <span>$12,000 – $15,000 <em>· Anuncios, contenido y apoyo comercial</em></span>
+              </label>
+              <label class="option-card wide">
+                <input type="radio" name="inversion" value="$15,000 - $20,000" />
+                <span>$15,000 – $20,000 <em>· Anuncios, contenido y apoyo comercial</em></span>
+              </label>
+            </div>
+            <small class="error">Selecciona una inversión.</small>
+          </div>
+
+          <label class="field">
+            <span>¿Cuánto vende actualmente tu marca sin redes sociales?</span>
+            <input type="text" name="ventas_actuales"
+              placeholder="No es necesario aquí, podemos verlo en la llamada de la etapa 2." />
+          </label>
+
+          <label class="field">
+            <span>¿Quién cierra las ventas actualmente? *</span>
+            <input type="text" name="cierre_ventas"
+              placeholder="Ej. Yo, un vendedor, recepción, WhatsApp, equipo comercial…" required />
+            <small class="error">Indica quién cierra las ventas.</small>
+          </label>
+
+          <label class="field">
+            <span>¿Cuándo te gustaría comenzar? *</span>
+            <input type="date" name="fecha_inicio" required />
+            <small class="error">Selecciona una fecha.</small>
+          </label>
+
+          <label class="field">
+            <span>Información extra</span>
+            <textarea name="info_extra" rows="4"
+              placeholder="Si tienes una idea concreta o quieres agregar información que nos ayude a entender mejor el proyecto, agrégala aquí. (Mientras más detalles, mejor.)"></textarea>
+          </label>
+        </fieldset>
+
+        <div class="form-actions">
+          <button class="btn ghost" type="button" id="prevBtn">Atrás</button>
+          <button class="btn primary" type="button" id="nextBtn">Continuar</button>
+          <button class="btn primary is-hidden" type="submit" id="submitBtn">Enviar briefing</button>
+        </div>
+      </form>
+
+      <div class="success-card" id="successCard" hidden>
+        <span class="success-icon">✓</span>
+        <h3>¡Fase 1 terminada!</h3>
+        <p>
+          Gracias por confiar en Kactus Agency. Cada respuesta nos ayuda a entender mejor tu marca
+          para crear contenido con intención y resultados. Pronto te escribiremos para el siguiente
+          paso.
+        </p>
+        <button class="btn ghost" type="button" id="resetBtn">Enviar otro formulario</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

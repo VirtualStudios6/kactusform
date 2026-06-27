@@ -272,10 +272,10 @@
   }
 
   .l-cta {
-    width: 100%;
-    max-width: 340px;
-    font-size: 15px;
-    padding: 0 20px;
+    width: auto;
+    min-height: 48px;
+    font-size: 14px;
+    padding: 0 24px;
   }
 
   .l-section {
@@ -287,8 +287,7 @@
   }
 
   .l-cta-section .l-cta {
-    width: 100%;
-    max-width: 340px;
+    width: auto;
   }
 
   .l-process {

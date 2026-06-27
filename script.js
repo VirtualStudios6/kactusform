@@ -10,6 +10,10 @@ const currentStepText = document.querySelector("#currentStep");
 const progressBar     = document.querySelector("#progressBar");
 const modalOverlay    = document.querySelector("#modalOverlay");
 const resetBtn        = document.querySelector("#resetBtn");
+const waBtn           = document.querySelector("#waBtn");
+const emailBtn        = document.querySelector("#emailBtn");
+
+let pendingPayload = null;
 
 const fieldExperiencia    = document.querySelector("#fieldExperiencia");
 const labelExperiencia    = document.querySelector("#labelExperiencia");
@@ -101,11 +105,24 @@ function getFormData() {
 
 async function enviarDatos(payload) {
   const body = {
-    ...payload,
-    objetivos: payload.objetivos.join(", "),
-    servicios: payload.servicios.join(", "),
+    "Nombre":                  payload.nombre                  || "",
+    "Teléfono":                payload.telefono                || "",
+    "Instagram":               payload.instagram               || "",
+    "Experiencia con agencia": payload.experiencia_agencia     || "",
+    "Describe experiencia":    payload.descripcion_experiencia || "",
+    "Negocio":                 payload.negocio                 || "",
+    "Proceso del cliente":     payload.proceso_cliente         || "",
+    "Objetivos":               payload.objetivos.join(", "),
+    "Servicios":               payload.servicios.join(", "),
+    "Referencias de marca":    payload.referencias             || "",
+    "En qué podemos ayudar":   payload.ayuda                   || "",
+    "Inversión mensual":       payload.inversion               || "",
+    "Ventas actuales":         payload.ventas_actuales         || "",
+    "Cierra ventas":           payload.cierre_ventas           || "",
+    "Fecha de inicio":         payload.fecha_inicio            || "",
+    "Información extra":       payload.info_extra              || "",
     _subject:  "📋 Nuevo brief Kactus: " + (payload.nombre || "Sin nombre"),
-    _template: "table",
+    _template: "box",
     _captcha:  "false",
   };
 
@@ -197,16 +214,24 @@ function lanzarConfetti() {
 // --- Abrir WhatsApp con el brief pre-llenado ---
 
 function abrirWhatsApp(payload) {
+  const l = (label, val) => val ? `▸ ${label}: ${val}\n` : "";
   const msg =
-    "📋 *Nuevo brief Kactus*\n\n" +
-    "Nombre: "    + (payload.nombre    || "-") + "\n" +
-    "Teléfono: "  + (payload.telefono  || "-") + "\n" +
-    "Instagram: " + (payload.instagram || "-") + "\n\n" +
-    "Negocio: "   + (payload.negocio   || "-") + "\n" +
-    "Servicios: " + (payload.servicios?.join(", ") || "-") + "\n" +
-    "Objetivos: " + (payload.objetivos?.join(", ") || "-") + "\n" +
-    "Inversión: " + (payload.inversion || "-") + "\n" +
-    "Inicio: "    + (payload.fecha_inicio || "-");
+    "📋 *Nuevo Brief · Kactus Agency*\n" +
+    "━━━━━━━━━━━━━━━━━━\n\n" +
+    "👤 *CONTACTO*\n" +
+    l("Nombre",    payload.nombre) +
+    l("Teléfono",  payload.telefono) +
+    l("Instagram", payload.instagram) +
+    "\n🏢 *NEGOCIO*\n" +
+    l("Actividad",           payload.negocio) +
+    l("Experiencia previa",  payload.experiencia_agencia) +
+    "\n🎯 *MARKETING*\n" +
+    l("Objetivos", payload.objetivos?.join(", ")) +
+    l("Servicios", payload.servicios?.join(", ")) +
+    "\n💰 *INVERSIÓN*\n" +
+    l("Monto mensual",  payload.inversion) +
+    l("Cierra ventas",  payload.cierre_ventas) +
+    l("Fecha de inicio",payload.fecha_inicio);
 
   const numero = WA_NUMERO.replace(/[^\d]/g, "");
   window.open("https://wa.me/" + numero + "?text=" + encodeURIComponent(msg), "_blank");
@@ -239,37 +264,42 @@ form.addEventListener("input", (event) => {
   if (group) group.classList.remove("is-invalid");
 });
 
-form.addEventListener("submit", async (event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!validateCurrentStep()) return;
 
-  const payload = getFormData();
+  pendingPayload = getFormData();
+  sonarExito();
+  lanzarConfetti();
+  modalOverlay.hidden = false;
+  document.body.style.overflow = "hidden";
+});
 
-  // Estado de carga
-  submitBtn.disabled = true;
-  submitBtn.textContent = "Enviando…";
+waBtn.addEventListener("click", () => {
+  if (pendingPayload) abrirWhatsApp(pendingPayload);
+});
 
+emailBtn.addEventListener("click", async () => {
+  if (!pendingPayload) return;
+  const span = emailBtn.querySelector("span");
+  emailBtn.disabled = true;
+  span.textContent = "Enviando…";
   try {
-    await enviarDatos(payload);
-    abrirWhatsApp(payload);
-    sonarExito();
-    lanzarConfetti();
-    modalOverlay.hidden = false;
-    document.body.style.overflow = "hidden";
+    await enviarDatos(pendingPayload);
+    span.textContent = "✓ Correo enviado";
   } catch (_) {
-    submitBtn.textContent = "Error de conexión — intenta de nuevo";
-    submitBtn.disabled = false;
-    return;
+    span.textContent = "Error — intenta de nuevo";
+    emailBtn.disabled = false;
   }
-
-  submitBtn.disabled = false;
-  submitBtn.textContent = "Enviar briefing";
 });
 
 resetBtn.addEventListener("click", () => {
   form.reset();
   modalOverlay.hidden = true;
   document.body.style.overflow = "";
+  pendingPayload = null;
+  emailBtn.querySelector("span").textContent = "Enviar por correo";
+  emailBtn.disabled = false;
   currentStep = 0;
   updateExperienciaField();
   updateStep();

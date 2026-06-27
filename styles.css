@@ -272,6 +272,10 @@ textarea {
   transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
 }
 
+input[type="date"] {
+  color-scheme: dark;
+}
+
 textarea {
   resize: vertical;
   min-height: 116px;
@@ -399,6 +403,10 @@ textarea::placeholder {
   padding: 0 22px;
   cursor: pointer;
   font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   transition: transform 160ms ease, opacity 160ms ease, background 160ms ease;
 }
 
@@ -485,6 +493,43 @@ textarea::placeholder {
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
   animation: drawMark 0.4s cubic-bezier(0.65, 0, 0.45, 1) 0.65s forwards;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin: 8px 0 4px;
+}
+
+.modal-actions .btn {
+  width: 100%;
+}
+
+.wa-btn {
+  background: #25d366;
+  color: #fff;
+}
+
+.wa-btn:hover {
+  background: #1ebe5c;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 8px;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: var(--text);
 }
 
 .success-card h3 {

@@ -108,6 +108,7 @@ textarea {
 .modal-logo {
   height: 48px;
   margin: 0 auto 20px;
+  animation: none;
 }
 
 .brand-pill,
@@ -438,9 +439,12 @@ textarea::placeholder {
 }
 
 .btn.primary {
-  margin-left: auto;
   color: #10130d;
   background: var(--accent);
+}
+
+.form-actions .btn.primary {
+  margin-left: auto;
 }
 
 .btn.ghost {
@@ -453,6 +457,52 @@ textarea::placeholder {
   opacity: 0.35;
   cursor: not-allowed;
   transform: none;
+}
+
+.option-card:focus-within,
+.btn:focus-visible,
+.btn-link:focus-visible {
+  outline: 2px solid rgba(199, 255, 74, 0.9);
+  outline-offset: 3px;
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.privacy-note,
+.form-status {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.privacy-note a {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.form-status {
+  min-height: 20px;
+  font-weight: 700;
+}
+
+.form-status:empty {
+  display: none;
+}
+
+.form-status.is-error {
+  color: var(--danger);
+}
+
+.form-status.is-success {
+  color: var(--accent);
 }
 
 .is-hidden {
@@ -667,6 +717,10 @@ textarea::placeholder {
     align-items: center;
   }
 
+  .form-step.is-active {
+    padding-bottom: 88px;
+  }
+
   .form-actions {
     position: sticky;
     bottom: 0;
@@ -677,7 +731,7 @@ textarea::placeholder {
     backdrop-filter: blur(12px);
   }
 
-  .btn {
+  .form-actions .btn {
     flex: 1;
     padding-inline: 16px;
   }
@@ -747,12 +801,6 @@ textarea::placeholder {
 
   .form-header h2 {
     font-size: 26px;
-  }
-
-  .step-counter {
-    min-width: 48px;
-    height: 36px;
-    font-size: 13px;
   }
 
   .modal-split {

@@ -6,6 +6,16 @@
   <meta name="theme-color" content="#080a0d" />
   <title>Kactus Agency | Marketing Digital en México</title>
   <meta name="description" content="Agencia de marketing digital especializada en contenido, Meta Ads y estrategia comercial para marcas mexicanas." />
+  <link rel="canonical" href="https://kactusagency.mx/" />
+  <meta property="og:title" content="Kactus Agency | Marketing Digital en México" />
+  <meta property="og:description" content="Contenido, Meta Ads y estrategia comercial para marcas mexicanas que quieren crecer con resultados medibles." />
+  <meta property="og:image" content="https://kactusagency.mx/assets/og-kactus.jpg" />
+  <meta property="og:url" content="https://kactusagency.mx/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kactus Agency | Marketing Digital en México" />
+  <meta name="twitter:description" content="Contenido, Meta Ads y estrategia comercial para marcas mexicanas que quieren crecer con resultados medibles." />
+  <meta name="twitter:image" content="https://kactusagency.mx/assets/og-kactus.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,8 +36,8 @@
       <span class="brand-pill">KACTUS AGENCY · MÉXICO</span>
       <h1>Marketing que<br/><em>conecta.</em></h1>
       <p>
-        Creamos contenido, campañas y estrategias digitales para marcas mexicanas
-        que quieren crecer con resultados medibles y reales.
+        Creamos contenido, campañas y estrategias digitales para marcas en México, Latinoamérica y otros mercados que buscan crecer con resultados medibles y reales.
+
       </p>
       <a href="form/" class="btn primary l-cta">Cuéntanos tu proyecto →</a>
     </section>
@@ -91,12 +101,24 @@
       <a href="form/" class="btn primary l-cta">Iniciar mi estrategia →</a>
     </section>
 
+    <section class="l-privacy" id="privacidad">
+      <span class="eyebrow">Privacidad</span>
+      <p>
+        Kactus Agency usa los datos que compartes únicamente para contactarte sobre tu solicitud.
+        No compartimos tu información con terceros.
+      </p>
+    </section>
+
   </main>
 
   <footer class="l-footer">
-    <span>© 2025 Kactus Agency</span>
+    <span>© <span id="footerYear">2026</span> Kactus Agency</span>
     <span>México · Marketing Digital</span>
   </footer>
+
+  <script>
+    document.querySelector("#footerYear").textContent = new Date().getFullYear();
+  </script>
 
 </body>
 </html>

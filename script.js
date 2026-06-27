@@ -12,6 +12,7 @@ const modalOverlay    = document.querySelector("#modalOverlay");
 const resetBtn        = document.querySelector("#resetBtn");
 const waBtn           = document.querySelector("#waBtn");
 const emailBtn        = document.querySelector("#emailBtn");
+const ambosBtn        = document.querySelector("#ambosBtn");
 
 let pendingPayload = null;
 
@@ -286,9 +287,32 @@ emailBtn.addEventListener("click", async () => {
   span.textContent = "Enviando…";
   try {
     await enviarDatos(pendingPayload);
-    span.textContent = "✓ Correo enviado";
+    span.textContent = "✓ Enviado";
   } catch (_) {
-    span.textContent = "Error — intenta de nuevo";
+    span.textContent = "Error";
+    emailBtn.disabled = false;
+  }
+});
+
+ambosBtn.addEventListener("click", async () => {
+  if (!pendingPayload) return;
+  const span = ambosBtn.querySelector("span");
+  ambosBtn.disabled = true;
+  waBtn.disabled    = true;
+  emailBtn.disabled = true;
+  span.textContent  = "Enviando correo…";
+  try {
+    await enviarDatos(pendingPayload);
+    emailBtn.querySelector("span").textContent = "✓ Enviado";
+    span.textContent = "Abriendo WhatsApp…";
+    setTimeout(() => {
+      abrirWhatsApp(pendingPayload);
+      span.textContent = "✓ Enviado para ambos";
+    }, 400);
+  } catch (_) {
+    span.textContent  = "Error — intenta de nuevo";
+    ambosBtn.disabled = false;
+    waBtn.disabled    = false;
     emailBtn.disabled = false;
   }
 });
@@ -298,8 +322,11 @@ resetBtn.addEventListener("click", () => {
   modalOverlay.hidden = true;
   document.body.style.overflow = "";
   pendingPayload = null;
-  emailBtn.querySelector("span").textContent = "Enviar por correo";
-  emailBtn.disabled = false;
+  emailBtn.querySelector("span").textContent = "Correo";
+  emailBtn.disabled  = false;
+  ambosBtn.querySelector("span").textContent = "Enviar para ambos";
+  ambosBtn.disabled  = false;
+  waBtn.disabled     = false;
   currentStep = 0;
   updateExperienciaField();
   updateStep();

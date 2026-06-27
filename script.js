@@ -13,8 +13,16 @@ const resetBtn        = document.querySelector("#resetBtn");
 const waBtn           = document.querySelector("#waBtn");
 const emailBtn        = document.querySelector("#emailBtn");
 const ambosBtn        = document.querySelector("#ambosBtn");
+const stepDotsEl      = document.querySelector("#stepDots");
 
 let pendingPayload = null;
+
+// Generar dots
+steps.forEach(() => {
+  const d = document.createElement("div");
+  d.className = "step-dot";
+  stepDotsEl.appendChild(d);
+});
 
 const fieldExperiencia    = document.querySelector("#fieldExperiencia");
 const labelExperiencia    = document.querySelector("#labelExperiencia");
@@ -64,6 +72,11 @@ function updateStep() {
   prevBtn.disabled = currentStep === 0;
   nextBtn.classList.toggle("is-hidden", currentStep === steps.length - 1);
   submitBtn.classList.toggle("is-hidden", currentStep !== steps.length - 1);
+
+  stepDotsEl.querySelectorAll(".step-dot").forEach((dot, i) => {
+    dot.classList.toggle("is-active", i === currentStep);
+    dot.classList.toggle("is-done",   i <  currentStep);
+  });
 }
 
 // --- Validación ---
@@ -214,28 +227,31 @@ function lanzarConfetti() {
 
 // --- Abrir WhatsApp con el brief pre-llenado ---
 
-function abrirWhatsApp(payload) {
-  const l = (label, val) => val ? `▸ ${label}: ${val}\n` : "";
-  const msg =
-    "📋 *Nuevo Brief · Kactus Agency*\n" +
-    "━━━━━━━━━━━━━━━━━━\n\n" +
-    "👤 *CONTACTO*\n" +
+function construirMsgWA(payload) {
+  const l = (label, val) => val ? `- ${label}: ${val}\n` : "";
+  return (
+    "*Nuevo Brief - Kactus Agency*\n\n" +
+    "*Contacto*\n" +
     l("Nombre",    payload.nombre) +
-    l("Teléfono",  payload.telefono) +
+    l("Telefono",  payload.telefono) +
     l("Instagram", payload.instagram) +
-    "\n🏢 *NEGOCIO*\n" +
-    l("Actividad",           payload.negocio) +
-    l("Experiencia previa",  payload.experiencia_agencia) +
-    "\n🎯 *MARKETING*\n" +
+    "\n*Negocio*\n" +
+    l("Actividad",          payload.negocio) +
+    l("Experiencia previa", payload.experiencia_agencia) +
+    "\n*Marketing*\n" +
     l("Objetivos", payload.objetivos?.join(", ")) +
     l("Servicios", payload.servicios?.join(", ")) +
-    "\n💰 *INVERSIÓN*\n" +
+    "\n*Inversion*\n" +
     l("Monto mensual",  payload.inversion) +
     l("Cierra ventas",  payload.cierre_ventas) +
-    l("Fecha de inicio",payload.fecha_inicio);
+    l("Fecha de inicio",payload.fecha_inicio)
+  );
+}
 
+function abrirWhatsApp(payload) {
   const numero = WA_NUMERO.replace(/[^\d]/g, "");
-  window.open("https://wa.me/" + numero + "?text=" + encodeURIComponent(msg), "_blank");
+  const url    = "https://wa.me/" + numero + "?text=" + encodeURIComponent(construirMsgWA(payload));
+  window.location.href = url;
 }
 
 // --- Eventos ---
@@ -303,12 +319,10 @@ ambosBtn.addEventListener("click", async () => {
   span.textContent  = "Enviando correo…";
   try {
     await enviarDatos(pendingPayload);
-    emailBtn.querySelector("span").textContent = "✓ Enviado";
+    emailBtn.querySelector("span").textContent = "Enviado";
     span.textContent = "Abriendo WhatsApp…";
-    setTimeout(() => {
-      abrirWhatsApp(pendingPayload);
-      span.textContent = "✓ Enviado para ambos";
-    }, 400);
+    // Redirige directamente (sin popup) — va a WA y el historial permite volver
+    setTimeout(() => abrirWhatsApp(pendingPayload), 600);
   } catch (_) {
     span.textContent  = "Error — intenta de nuevo";
     ambosBtn.disabled = false;

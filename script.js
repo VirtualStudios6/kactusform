@@ -228,18 +228,18 @@ function lanzarConfetti() {
 function construirMsgWA(payload) {
   const l = (label, val) => val ? `- ${label}: ${val}\n` : "";
   return (
-    "*Nuevo Brief - Kactus Agency*\n\n" +
-    "*Contacto*\n" +
+    "📋 *Nuevo Brief - Kactus Agency*\n\n" +
+    "👤 *Contacto*\n" +
     l("Nombre",    payload.nombre) +
-    l("Telefono",  payload.telefono) +
+    l("Teléfono",  payload.telefono) +
     l("Instagram", payload.instagram) +
-    "\n*Negocio*\n" +
+    "\n🏢 *Negocio*\n" +
     l("Actividad",          payload.negocio) +
     l("Experiencia previa", payload.experiencia_agencia) +
-    "\n*Marketing*\n" +
+    "\n🎯 *Marketing*\n" +
     l("Objetivos", payload.objetivos?.join(", ")) +
     l("Servicios", payload.servicios?.join(", ")) +
-    "\n*Inversion*\n" +
+    "\n💰 *Inversión*\n" +
     l("Monto mensual",  payload.inversion) +
     l("Cierra ventas",  payload.cierre_ventas) +
     l("Fecha de inicio",payload.fecha_inicio)

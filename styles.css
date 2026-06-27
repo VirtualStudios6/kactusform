@@ -97,6 +97,12 @@ textarea {
   display: block;
   align-self: flex-start;
   margin-bottom: 16px;
+  animation: flotar 4s ease-in-out infinite;
+}
+
+@keyframes flotar {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-8px); }
 }
 
 .modal-logo {

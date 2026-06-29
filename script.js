@@ -2,6 +2,8 @@ const SUBMIT_URL = "https://formsubmit.co/ajax/hola@kactusagency.mx";
 
 const WA_NUMERO = "+528443414579";
 const MIN_FILL_TIME_MS = 3500;
+const FORM_ERROR_MESSAGE =
+  "No pudimos enviar tu brief por correo en este momento. Intenta de nuevo o escríbenos por WhatsApp.";
 
 const form = document.querySelector("#projectForm");
 const steps = [...document.querySelectorAll(".form-step")];
@@ -90,6 +92,18 @@ function setStatus(message = "", type = "error") {
   formStatus.textContent = message;
   formStatus.classList.toggle("is-error", Boolean(message) && type === "error");
   formStatus.classList.toggle("is-success", Boolean(message) && type === "success");
+}
+
+function getFriendlySubmitError(error) {
+  const message = String(error?.message || "").toLowerCase();
+  const isSetupError =
+    message.includes("activate form") ||
+    message.includes("needs activation") ||
+    message.includes("confirm") ||
+    message.includes("correo receptor");
+
+  if (isSetupError) return FORM_ERROR_MESSAGE;
+  return FORM_ERROR_MESSAGE;
 }
 
 function setFieldError(field, message) {
@@ -444,7 +458,7 @@ form.addEventListener("submit", async (event) => {
     setStatus();
     openSuccessModal();
   } catch (err) {
-    setStatus(err.message || "No pudimos enviar el formulario. Intenta de nuevo.");
+    setStatus(getFriendlySubmitError(err));
   } finally {
     setSubmittingState(false);
     updateStep();

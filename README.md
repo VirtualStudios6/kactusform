@@ -34,16 +34,14 @@ No se modificó DNS ni configuración de Vercel.
 Los datos actuales son temporales de prueba del desarrollador. Antes de entregar al cliente, cámbialos en [script.js](script.js):
 
 ```js
-const SUBMIT_URL = "https://formsubmit.co/ajax/ceovirtualstudios@gmail.com";
-const WA_NUMERO = "+18295846469";
+const SUBMIT_URL = "https://formsubmit.co/ajax/hola@kactusagency.mx";
+const WA_NUMERO = "+528443414579";
 ```
 
 - Correo receptor de FormSubmit: cambia el correo dentro de `SUBMIT_URL`.
 - Número de WhatsApp: cambia `WA_NUMERO`.
 - Correo visible en landing: actualmente no hay correo visible en la landing.
 - Links de contacto visibles: actualmente los CTAs apuntan a `/form/`.
-
-La marca comunica México, pero el WhatsApp actual puede no ser mexicano. No se cambió porque es temporal.
 
 ## Envío con FormSubmit
 

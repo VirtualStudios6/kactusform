@@ -1,8 +1,6 @@
-// Datos temporales de prueba: reemplazar por el correo final del cliente antes de producción.
-const SUBMIT_URL = "https://formsubmit.co/ajax/ceovirtualstudios@gmail.com";
+const SUBMIT_URL = "https://formsubmit.co/ajax/hola@kactusagency.mx";
 
-// Dato temporal de prueba: reemplazar por el WhatsApp final del cliente antes de producción.
-const WA_NUMERO = "+18295846469";
+const WA_NUMERO = "+528443414579";
 const MIN_FILL_TIME_MS = 3500;
 
 const form = document.querySelector("#projectForm");
